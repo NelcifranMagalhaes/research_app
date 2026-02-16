@@ -53,12 +53,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: valkey/valkey:8
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: research_app_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -68,9 +73,16 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Create test fixtures
+        run: |
+          mkdir -p test/fixtures/files
+          cat > test/fixtures/files/sample.csv << 'EOF'
+          nome;email;email_corporativo;genero;geracao;tempo_de_empresa;n0_empresa;funcao;localidade;cargo;n1_diretoria;area;n3_coordenacao;n4_area;n2_gerencia;Data da Resposta;Interesse no Cargo
+          John Doe;john@example.com;john@company.com;Male;Millennial;5 years;Company A;Developer;São Paulo;Senior Dev;Tech;Engineering;Backend;API;Development;2026-02-15;5
+          EOF
+
       - name: Run tests
         env:
           RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/research_app_test
         run: bin/rails db:test:prepare test
