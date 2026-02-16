@@ -17,9 +17,5 @@ module SurveyResponses
         nil
       end
     end
-
-    def success?
-      @errors.empty?
-    end
   end
 end

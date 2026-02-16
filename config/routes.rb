@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     post 'research_import' => 'research_import#import'
+    delete 'reset_database' => 'research_import#reset_database'
   end
 end

@@ -3,6 +3,8 @@ require 'csv'
 class CsvProcessing
   def initialize(file_path)
     @file_path = file_path
+    @employee = nil
+    @organization = nil
   end
 
   def process
@@ -37,7 +39,7 @@ class CsvProcessing
       generation: row['geracao'],
       company_tenure: row['tempo_de_empresa']
     }
-    Employees::CreateUseCase.new(employee_params).execute
+    @employee = Employees::CreateUseCase.new(employee_params).execute
   end
 
   def create_organization(row)
@@ -52,18 +54,20 @@ class CsvProcessing
       area: row['n4_area'],
       administration: row['n2_gerencia']
     }
-    Organizations::CreateUseCase.new(organization_params).execute
+    @organization = Organizations::CreateUseCase.new(organization_params).execute
   end
 
   def create_survey_response(row)
-    survey_response_params = {
-      employee_id: Employee.find_by(personal_email: row['email'])&.id,
-      organization_id: Organization.find_by(company_name: row['n0_empresa'])&.id,
-      question_id: Question.find_by(theme: 'Interesse no Cargo')&.id,
-      answer_date: row['Data da Resposta'],
-      score: row['Interesse no Cargo'],
-      comment: row['comentario']
-    }
-    SurveyResponses::CreateUseCase.new(survey_response_params).execute
+    Question.all.each do |question|
+      survey_response_params = {
+        employee_id: @employee.id,
+        organization_id: @organization.id,
+        question_id: question.id,
+        answer_date: row['Data da Resposta'],
+        score: row[question.theme],
+        comment: row["Comentários - #{question.theme}"]
+      }
+      SurveyResponses::CreateUseCase.new(survey_response_params).execute
+    end
   end
 end

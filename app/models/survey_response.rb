@@ -1,5 +1,5 @@
 class SurveyResponse < ApplicationRecord
-  belongs_to :employee_id
-  belongs_to :organization_id
-  belongs_to :question_id
+  belongs_to :employee
+  belongs_to :organization
+  belongs_to :question
 end
