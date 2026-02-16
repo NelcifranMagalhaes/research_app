@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class EmployeeTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'should have many survey_responses' do
+    assert_respond_to Employee.new, :survey_responses
+  end
 end

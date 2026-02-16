@@ -9,6 +9,7 @@ one:
   department: MyString
   management: MyString
   area: MyString
+  administration: MyString
 
 two:
   company_name: MyString
@@ -19,3 +20,4 @@ two:
   department: MyString
   management: MyString
   area: MyString
+  administration: MyString
