@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     get 'organizations' => 'organizations#index'
     get 'questions' => 'questions#index'
     get 'survey_responses' => 'survey_responses#index'
+    get 'survey_responses_by_employee' => 'survey_responses#get_survey_responses_by_employee'
   end
 end
