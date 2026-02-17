@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   namespace :v1 do
     post 'research_import' => 'research_import#import'
     delete 'reset_database' => 'research_import#reset_database'
+    get 'employees' => 'employees#index'
+    get 'organizations' => 'organizations#index'
+    get 'questions' => 'questions#index'
+    get 'survey_responses' => 'survey_responses#index'
   end
 end
