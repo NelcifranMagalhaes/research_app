@@ -49,19 +49,15 @@ class CsvImportJobTest < ActiveJob::TestCase
 
   test 'should delete file even when processing fails' do
     temp_file = Rails.root.join('tmp', 'test_csv_import_error.csv').to_s
-    # Create a CSV with missing required header that will cause processing to fail
     File.write(temp_file, "invalid;csv\ndata;data")
 
     assert File.exist?(temp_file)
 
-    # Process will fail because it can't find required headers
     begin
       CsvImportJob.perform_now(temp_file)
     rescue StandardError
-      # Expected to fail
     end
 
-    # File should still be deleted even after error
     assert_not File.exist?(temp_file)
   end
 

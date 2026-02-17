@@ -62,11 +62,9 @@ class CsvProcessingTest < ActiveSupport::TestCase
 
     csv_processing.process
 
-    # One new question created from CSV, and survey responses created for all existing + new questions
     new_questions = Question.count - initial_question_count
     assert_equal 1, new_questions
 
-    # Survey responses = total questions after processing (existing + new)
     total_questions = Question.count
     expected_responses = initial_survey_count + total_questions
 

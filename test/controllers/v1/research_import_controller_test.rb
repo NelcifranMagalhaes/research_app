@@ -35,14 +35,11 @@ module V1
     end
 
     test 'should handle exceptions and return unprocessable_entity when persist_upload fails' do
-      file = fixture_file_upload('sample.csv', 'text/csv')
+      fixture_file_upload('sample.csv', 'text/csv')
 
-      # Make the uploads directory read-only to cause an error
       upload_dir = Rails.root.join('tmp', 'uploads')
       FileUtils.mkdir_p(upload_dir)
 
-      # Mock the SecureRandom to return a predictable value and then cause permission error
-      # Instead of mocking, we'll just test with nil file
       post '/v1/research_import', params: { file: nil }
 
       assert_response :bad_request

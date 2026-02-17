@@ -1,17 +1,16 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  personal_email: MyString
-  gender: MyString
-  generation: MyString
-  corporate_email: MyString
-  company_tenure: MyString
+  name: Sasuke Uchiha
+  personal_email: sasuke@uchiha.com
+  gender: Male
+  generation: Millennial
+  corporate_email: sasuke.uchiha@company.com
+  company_tenure: 5 years
 
 two:
-  name: MyString
-  personal_email: MyString
-  gender: MyString
-  generation: MyString
-  corporate_email: MyString
-  company_tenure: MyString
+  name: Naruto Uzumaki
+  personal_email: naruto@uzumaki.com
+  gender: Male
+  generation: Millennial
+  corporate_email: naruto.uzumaki@company.com
+  company_tenure: 3 years

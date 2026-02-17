@@ -16,7 +16,6 @@ class ResetDatabaseJobTest < ActiveJob::TestCase
   end
 
   test 'should delete all survey responses' do
-    # Create some test data
     employee = employees(:one)
     organization = organizations(:one)
     question = questions(:one)
